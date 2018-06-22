@@ -1,3 +1,5 @@
+var Error = require('./error').Error;
+
 /**
  * Класс, объекты которого описывают заказ
  *
@@ -29,11 +31,10 @@ Order.prototype.getDishes = function() {
  * @param item Блюдо
  */
 Order.prototype.addToOrder = function(item) {
-  var itemProperties = item.getProperties();
   if (!this.getPaid()) {
-    this._dishes.push(itemProperties);
+    this._dishes.push(item);
   } else {
-    return 'U have already paid your order'
+    throw new Error('Adding of item was rejected. Order is closed')
   }
 };
 
@@ -46,7 +47,7 @@ Order.prototype.deletePositionFromOrder = function(index) {
     var dishPosition = index - 1;
     this.getDishes().splice(dishPosition, 1);
   } else {
-    return 'U have already paid your order'
+    throw new Error('Deleting of item was rejected. Order is closed')
   }
 };
 
@@ -59,8 +60,10 @@ Order.prototype.calculateTotalPrice = function() {
   var totalSum = 0;
   if (thisOrder.length > 0) {
     for (var index = 0; index < thisOrder.length; index++) {
-      totalSum += thisOrder[index].price;
+      totalSum += thisOrder[index].calculatePrice();
     }
+  } else {
+    throw new Error('Calculating price is not available. Order is empty')
   }
   return totalSum;
 };
@@ -74,8 +77,11 @@ Order.prototype.calculateTotalCalories = function() {
   var totalSum = 0;
   if (thisOrder.length > 0) {
     for (var index = 0; index < thisOrder.length; index++) {
-      totalSum += thisOrder[index].calories;
+      totalSum += thisOrder[index].calculateCalories();
     }
+  } else {
+    throw new Error('Calculating calories is not available. Order is empty')
+
   }
   return totalSum;
 };

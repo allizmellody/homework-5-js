@@ -1,4 +1,5 @@
-var MenuItem = require('./item').MenuItem;
+var MenuItem = require('./menuItem').MenuItem,
+    Error = require('./error').Error;
 
 /**
  * Класс, объекты которого описывают параметры салата
@@ -35,7 +36,7 @@ Salad.prototype.changeWeight = function(value) {
   if (value > 100) {
     this._weight = value
   } else {
-    return 'Weight of your salad can\'t be less then 100 gram';
+    throw new Error('Changing weight was rejected. Weight can not be less then 100');
   }
 };
 
@@ -59,23 +60,6 @@ Salad.prototype.calculateCalories = function() {
   var caloriesPerGram = thisType.calories / 100;
 
   return caloriesPerGram * this.getWeight();
-};
-
-/**
- * Узнать свойства салата
- */
-Salad.prototype.getProperties = function() {
-  var name = this.getName();
-  var weight = this.getWeight();
-  var price = this.calculatePrice();
-  var calories = this.calculateCalories();
-
-  return {
-    name: name,
-    weight: weight,
-    price: price,
-    calories: calories
-  };
 };
 
 module.exports = {

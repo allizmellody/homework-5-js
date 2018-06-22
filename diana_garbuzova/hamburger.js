@@ -1,4 +1,5 @@
-var MenuItem = require('./item').MenuItem;
+var MenuItem = require('./menuItem').MenuItem,
+    Error = require('./error').Error;
 
 /**
  * Класс объекты, которого описывают параметры гамбургера
@@ -51,12 +52,9 @@ Hamburger.prototype.getStuffingProperties = function() {
 Hamburger.prototype.changeStuffingCount = function(name, value) {
   var stuffing = this.getStuffing();
   if (value < 1 || countStuffingSum(stuffing) < 1) {
-    return 'Stuffing count can\'t be less then 1'
+    throw new Error('Stuffing count can\'t be less then 1')
   } else {
-    if (value === undefined) {
-      value = 1;
-    }
-    stuffing[name] = value;
+    stuffing[name] = value || 1;
   }
 };
 
@@ -90,35 +88,18 @@ Hamburger.prototype.calculateCalories = function() {
   return sum;
 };
 
-/**
- * Узнать свойства гамбургера
- */
-Hamburger.prototype.getProperties = function() {
-  var name = this.getName();
-  var stuffing = this.getStuffing();
-  var price = this.calculatePrice();
-  var calories = this.calculateCalories();
-
-  return {
-    name: name,
-    stuffing: stuffing,
-    price: price,
-    calories: calories
-  };
-};
-
-var stuffing = {
+var stuffingArray = {
   cheese: Hamburger.STUFFING_CHEESE,
   salad: Hamburger.STUFFING_SALAD,
   potato: Hamburger.STUFFING_POTATO
 };
 
 function getStuffingByName(name) {
-  return stuffing[name];
+  return stuffingArray[name];
 }
 
 function countStuffingSum(stuffing) {
-  var sum;
+  var sum = 0;
   for (var key in stuffing) {
     sum += stuffing[key];
   }

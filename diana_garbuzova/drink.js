@@ -1,4 +1,4 @@
-var MenuItem = require('./item').MenuItem;
+var MenuItem = require('./menuItem').MenuItem;
 
 /**
  * Класс, параметры которого описывают напиток
@@ -30,20 +30,6 @@ Drink.prototype.calculateCalories = function() {
   return this.getType().calories;
 };
 
-/**
- * Узнать свойства гамбургера
- */
-Drink.prototype.getProperties = function() {
-  var name = this.getName();
-  var price = this.calculatePrice();
-  var calories = this.calculateCalories();
-
-  return {
-    name: name,
-    price: price,
-    calories: calories
-  };
-};
 module.exports = {
   Drink: Drink
 };
