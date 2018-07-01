@@ -31,3 +31,10 @@ console.log('total price: ' + order.calculateTotalPrice());
 console.log('total calories: ' + order.calculateTotalCalories());
 
 order.pay();
+
+var newOrder = new Order();
+
+var smallBurger1 = new Hamburger(Hamburger.SIZE_SMALL, 'salad');
+newOrder.addToOrder(smallBurger1);
+
+console.log(newOrder.getDishes());

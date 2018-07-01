@@ -57,15 +57,15 @@ Order.prototype.deletePositionFromOrder = function(index) {
  */
 Order.prototype.calculateTotalPrice = function() {
   var thisOrder = this.getDishes();
-  var totalSum = 0;
   if (thisOrder.length > 0) {
+    var totalPrice = 0;
     for (var index = 0; index < thisOrder.length; index++) {
-      totalSum += thisOrder[index].calculatePrice();
+      totalPrice += thisOrder[index].calculatePrice();
     }
+    return totalPrice;
   } else {
     throw new Error('Calculating price is not available. Order is empty')
   }
-  return totalSum;
 };
 
 /**
@@ -74,16 +74,15 @@ Order.prototype.calculateTotalPrice = function() {
  */
 Order.prototype.calculateTotalCalories = function() {
   var thisOrder = this.getDishes();
-  var totalSum = 0;
   if (thisOrder.length > 0) {
+    var totalCalories = 0;
     for (var index = 0; index < thisOrder.length; index++) {
-      totalSum += thisOrder[index].calculateCalories();
+      totalCalories += thisOrder[index].calculateCalories();
     }
+    return totalCalories;
   } else {
-    throw new Error('Calculating calories is not available. Order is empty')
-
+    throw new Error('Calculating calories is not available. Order is empty');
   }
-  return totalSum;
 };
 
 /**
@@ -91,8 +90,7 @@ Order.prototype.calculateTotalCalories = function() {
  */
 Order.prototype.pay = function() {
   this._isPaid = true;
-  this.getDishes().length = 0;
-  // Object.freeze(this._dishes);
+  Object.freeze(this._dishes);
 };
 
 module.exports = {
